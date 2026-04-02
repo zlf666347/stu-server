@@ -56,11 +56,15 @@ public class AuthInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        // POST /api/users/login 允许登录
+        if ("POST".equals(method) && "/api/users/login".equals(uri)) {
+            return true;
+        }
+
         // GET /api/users/{id} 允许查看用户信息
         if ("GET".equals(method) && uri.matches("/api/users/\\d+")) {
             return true;
         }
 
         return false;
-    }
-}
+}}

@@ -1,37 +1,21 @@
-package com.stu.helloserver.entity;
+package com.stu.helloserver.entity.dto;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
-import com.baomidou.mybatisplus.annotation.TableName;
+public class UserDTO {
 
-@TableName("sys_user")
-public class User {
-
-    @TableId(type = IdType.AUTO)
-    private Long id;
     private String username;
     private String password;
 
     // 无参构造方法
-    public User() {
+    public UserDTO() {
     }
 
     // 全参构造方法
-    public User(Long id, String username, String password) {
-        this.id = id;
+    public UserDTO(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
     // Getter 和 Setter
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getUsername() {
         return username;
     }
