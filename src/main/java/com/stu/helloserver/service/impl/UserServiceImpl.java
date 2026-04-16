@@ -18,6 +18,16 @@ public class UserServiceImpl implements UserService {
     private UserMapper userMapper;
 
     @Override
+    public Result<User> getUserById(Long id) {
+        User user = userMapper.selectById(id);
+        if (user == null) {
+            return Result.error(404, "未找到 ID 为 " + id + " 的用户");
+        }
+        return Result.success(user);
+    }
+
+
+    @Override
     public Result<String> register(UserDTO userDTO) {
         // 检查用户名是否已存在
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
@@ -39,7 +49,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result<String> login(UserDTO userDTO) {
-        // 检查用户名是否存在
         LambdaQueryWrapper<User> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(User::getUsername, userDTO.getUsername());
         User user = userMapper.selectOne(queryWrapper);
@@ -48,13 +57,10 @@ public class UserServiceImpl implements UserService {
             return Result.error(ResultCode.USER_NOT_EXIST);
         }
 
-        // 校验密码
         if (!user.getPassword().equals(userDTO.getPassword())) {
             return Result.error(ResultCode.PASSWORD_ERROR);
         }
 
-        // 登录成功，返回 token（这里简单生成一个 token）
         String token = "token-" + user.getUsername() + "-" + System.currentTimeMillis();
-        return Result.success("登录成功", token);
-    }
+        return Result.success("登录成功", token);}
 }

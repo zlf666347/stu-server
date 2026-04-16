@@ -38,10 +38,6 @@ public class UserController {
 
     @GetMapping("/{id}")
     public Result<User> getUserInfo(@PathVariable("id") Long id) {
-        User user = userMapper.selectById(id);
-        if (user == null) {
-            return Result.error(404, "未找到 ID 为 " + id + " 的用户");
-        }
-        return Result.success(user);
+        return userService.getUserById(id);
     }
 }
